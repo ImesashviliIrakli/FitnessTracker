@@ -5,6 +5,8 @@ import { z } from "zod";
 const fmt = (v: unknown) => (typeof v === "number" || typeof v === "bigint" ? Number(v).toLocaleString() : String(v));
 
 z.config({
+  // No eval probe: the strict CSP (script-src 'self') reports it as a violation even though Zod catches it.
+  jitless: true,
   customError: (iss) => {
     switch (iss.code) {
       case "invalid_type":
