@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { useLogout, useMe } from "../lib/auth";
 import { WeightDialog } from "./WeightDialog";
+import { InstallBanner } from "./InstallApp";
 import { cx, Loading } from "./ui";
 
 export const nav: { to: string; label: string; short?: string; icon: LucideIcon; mobile?: boolean }[] = [
@@ -263,6 +264,7 @@ export function AppShell() {
         className="aurora min-w-0 bg-bg px-4 pt-5 pb-[calc(6.5rem+env(safe-area-inset-bottom))] focus:outline-none sm:px-6 md:rounded-tl-[2rem] md:border-t md:border-l md:border-line md:px-10 md:pt-10 md:pb-16"
       >
         <div className="mx-auto max-w-[90rem]">
+          {onDashboard && <InstallBanner />}
           <Suspense fallback={<Loading />}>
             <Outlet />
           </Suspense>

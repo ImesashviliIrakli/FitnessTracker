@@ -9,6 +9,7 @@ import { clearSession, useLogout } from "../lib/auth";
 import { getTheme, setTheme, type Theme } from "../lib/theme";
 import type { Goal, Profile, UpdateProfile } from "../lib/types";
 import { GoalForm } from "../components/GoalForm";
+import { InstallAppPanel } from "../components/InstallApp";
 import { browserZone, ProfileForm, zoneOffset } from "../components/ProfileForm";
 import { Button, Card, Dialog, ErrorState, Field, Input, Loading, PageHeader, Segmented } from "../components/ui";
 
@@ -65,6 +66,10 @@ export default function SettingsPage() {
           {goal.isPending ? <Loading /> : goal.isError ? <ErrorState error={goal.error} onRetry={() => goal.refetch()} /> : (
             <GoalForm key={goal.dataUpdatedAt} goal={goal.data} submitLabel="Save Goal" />
           )}
+        </Section>
+
+        <Section id="install" title="Install app" description="Add Fittrack to your home screen: it opens full screen like a native app and keeps recently viewed data available offline.">
+          <InstallAppPanel />
         </Section>
 
         <Section id="appearance" title="Appearance">

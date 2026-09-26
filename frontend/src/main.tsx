@@ -3,7 +3,7 @@ import { StrictMode, type CSSProperties } from "react";
 import { createRoot } from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RouterProvider } from "react-router";
-import { Toaster } from "sonner";
+import { toast, Toaster } from "sonner";
 import { registerSW } from "virtual:pwa-register";
 import { ApiError } from "./lib/api";
 import { meKey } from "./lib/auth";
@@ -36,7 +36,19 @@ window.addEventListener("data:changed", () => void queryClient.invalidateQueries
 
 window.addEventListener("auth:expired", () => queryClient.setQueryData(meKey, null));
 
-registerSW({ immediate: true });
+// A new version waits until the user chooses to reload (never mid-set). Checks hourly while open.
+const updateSW = registerSW({
+  immediate: true,
+  onNeedRefresh() {
+    toast("A new version of Fittrack is ready", {
+      duration: Infinity,
+      action: { label: "Reload", onClick: () => void updateSW(true) },
+    });
+  },
+  onRegisteredSW(_url, registration) {
+    if (registration) setInterval(() => void registration.update(), 60 * 60 * 1000);
+  },
+});
 watchSystemTheme();
 
 /** Sonner reads these variables; point them at the app's surfaces and semantic colours (both themes). */

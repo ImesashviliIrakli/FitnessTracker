@@ -9,7 +9,8 @@ export default defineConfig({
     react(),
     tailwindcss(),
     VitePWA({
-      registerType: "autoUpdate",
+      // "prompt": a new version waits for the user (a toast offers Reload), so an update never reloads mid-workout.
+      registerType: "prompt",
       includeAssets: ["favicon.png", "apple-touch-icon.png", "logo-mark.png"],
       manifest: {
         name: "Fittrack",
@@ -17,8 +18,20 @@ export default defineConfig({
         description: "Training, body metrics and goals.",
         theme_color: "#111318",
         background_color: "#111318",
-        display: "standalone",
+        id: "/",
+        scope: "/",
         start_url: "/",
+        display: "standalone",
+        display_override: ["standalone"],
+        orientation: "portrait",
+        lang: "en",
+        dir: "ltr",
+        categories: ["health", "fitness", "sports"],
+        shortcuts: [
+          { name: "Start workout", short_name: "Workout", url: "/workouts", icons: [{ src: "icon-192.png", sizes: "192x192", type: "image/png" }] },
+          { name: "Log weight", short_name: "Weight", url: "/body", icons: [{ src: "icon-192.png", sizes: "192x192", type: "image/png" }] },
+          { name: "Daily check-in", short_name: "Check-in", url: "/check-in", icons: [{ src: "icon-192.png", sizes: "192x192", type: "image/png" }] },
+        ],
         icons: [
           { src: "icon-192.png", sizes: "192x192", type: "image/png", purpose: "any" },
           { src: "icon-512.png", sizes: "512x512", type: "image/png", purpose: "any" },
