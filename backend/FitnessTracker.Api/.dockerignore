@@ -1,0 +1,12 @@
+bin/
+obj/
+out/
+logs/
+.vs/
+.vscode/
+.idea/
+*.md
+# Dev-only configuration carries localhost URLs and local credentials; a developer's
+# *.local.json overrides are per-machine. Neither belongs in a production image.
+appsettings.Development.json
+appsettings.*.local.json

@@ -1,0 +1,24 @@
+# .NET
+bin/
+obj/
+*.user
+appsettings.*.local.json
+.vs/
+TestResults/
+
+# Node
+node_modules/
+dist/
+dev-dist/
+playwright-report/
+test-results/
+*.tsbuildinfo
+.vite/
+
+# Env & local tooling
+.env
+.env.*
+.idea/
+.DS_Store
+
+coverage/
