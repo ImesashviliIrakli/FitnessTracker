@@ -12,9 +12,9 @@ export function setVolume(s: { weight: number | null; reps: number | null; isWar
 
 /** Distinct, accessible hues from the chart palette (each >= 3:1 on a card, both themes). */
 export const categoryColor: Record<ExerciseCategory, string> = {
-  Strength: "var(--chart-1)", // indigo
+  Strength: "var(--chart-1)", // blue
   Cardio: "var(--chart-2)", // teal
-  Mobility: "var(--chart-3)", // amber
+  Mobility: "var(--chart-3)", // violet
   Sport: "var(--chart-4)", // rose
 };
 

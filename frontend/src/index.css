@@ -9,23 +9,23 @@
   Design tokens. Swap the palette here; components only use the semantic names.
 
   Direction: calm instrument panel. Soft charcoal (never #000) / soft off-white,
-  and ONE accent: periwinkle slate-blue, spent sparingly — one filled primary action per screen,
+  and ONE accent: burnt orange, spent sparingly — one filled primary action per screen,
   progress, the current bar. Links, badges, nav and secondary buttons stay neutral or semantic.
   --accent        fills: the primary button, progress, the current bar
   --accent-fg     the accent as text or a thin line (same hue, tuned for contrast)
   --accent-ink    text on an accent fill
   --line          dividers and card edges
   --field/--field-line  input fill and boundary: the boundary is >= 3:1 (WCAG 1.4.11)
-  --chart-1..4    categorical: indigo, teal, amber, rose at similar lightness, each >= 3:1 on --surface.
+  --chart-1..4    categorical: blue, teal, violet, rose at similar lightness, each >= 3:1 on --surface.
                   Exercise categories use the same order (Strength, Cardio, Mobility, Sport).
 
-  Contrast (dark):  ink 13.8:1, muted 7.0:1, accent-fg 7.8:1 on --surface; surface/bg 1.13:1 (was 1.08);
-                    line/surface 1.72:1 and line/bg 1.95:1 (was 1.29); field-line/surface 3.75:1, field-line/field 3.33:1;
-                    chart-1..4 on surface 6.2 / 7.3 / 7.7 / 6.3:1; accent-ink on accent 5.8:1.
-  Contrast (light): ink 16.0:1, muted 6.7:1, accent-fg 7.1:1 on --surface; surface/bg 1.13:1;
+  Contrast (dark):  ink 13.8:1, muted 7.0:1, accent-fg 7.7:1 on --surface; surface/bg 1.13:1;
+                    line/surface 1.72:1 and line/bg 1.95:1; field-line/surface 3.75:1, field-line/field 3.33:1;
+                    chart-1..4 on surface 6.8 / 7.3 / 6.9 / 6.3:1; accent-ink on accent 6.6:1.
+  Contrast (light): ink 16.0:1, muted 6.7:1, accent-fg 6.2:1 on --surface; surface/bg 1.13:1;
                     line/surface 1.59:1; field-line/surface 3.55:1, field-line/field 3.64:1;
-                    chart-1..4 on surface 6.0 / 4.8 / 4.7 / 5.0:1; accent-ink on accent 5.8:1.
-  Semantic on surface (success/warning/danger/info): dark 8.2 / 8.8 / 6.9 / 7.3:1, light 4.9 / 5.2 / 5.0 / 5.7:1.
+                    chart-1..4 on surface 4.8 / 4.8 / 5.4 / 5.0:1; accent-ink on accent 4.9:1.
+  Semantic on surface (success/warning/danger/info): dark 8.3 / 8.9 / 7.0 / 7.4:1, light 4.9 / 5.2 / 5.0 / 5.7:1.
 */
 :root {
   --bg: #eceef3;
@@ -37,17 +37,17 @@
   --muted: #535a6c;
   --line: #c6cbd6;
   --field-line: #7f8698;
-  --accent: #4a55c8;
-  --accent-fg: #3f4ab8;
-  --accent-ink: #f7f8ff;
-  --glow: 74 85 200;
+  --accent: #c2410c;
+  --accent-fg: #a93a0b;
+  --accent-ink: #fff8f3;
+  --glow: 194 65 12;
   --success: #1d7f4f;
   --warning: #8f6200;
   --danger: #b84a44;
   --info: #22699e;
-  --chart-1: #4a55c8;
+  --chart-1: #2f6fd0;
   --chart-2: #0b7f70;
-  --chart-3: #a0650a;
+  --chart-3: #7c4dcc;
   --chart-4: #c23b67;
   color-scheme: light;
 }
@@ -62,17 +62,17 @@
   --muted: #a0a7b7;
   --line: #3d4452;
   --field-line: #6f7789;
-  --accent: #7f88f5;
-  --accent-fg: #a3aaff;
-  --accent-ink: #12142a;
-  --glow: 127 136 245;
+  --accent: #ea7a2f;
+  --accent-fg: #f59a5b;
+  --accent-ink: #1a0e05;
+  --glow: 234 122 47;
   --success: #5cc98a;
   --warning: #e3b457;
   --danger: #ec8a84;
   --info: #62b3e3;
-  --chart-1: #8b93ff;
+  --chart-1: #6aa8f5;
   --chart-2: #2fbfa8;
-  --chart-3: #e0a545;
+  --chart-3: #b294ff;
   --chart-4: #f07896;
   color-scheme: dark;
 }
@@ -184,19 +184,19 @@
 /* Faint aurora at the top of the canvas. */
 @utility aurora {
   background-image:
-    radial-gradient(60rem 28rem at 85% -12rem, rgb(var(--glow) / 0.07), transparent 70%),
-    radial-gradient(40rem 20rem at 0% -8rem, rgb(var(--glow) / 0.035), transparent 70%);
+    radial-gradient(60rem 28rem at 85% -12rem, rgb(var(--glow) / 0.035), transparent 70%),
+    radial-gradient(40rem 20rem at 0% -8rem, rgb(var(--glow) / 0.02), transparent 70%);
   background-repeat: no-repeat;
 }
 
 /* Accent-tinted glass for the one highlighted card in a group. */
 @utility glass-accent {
-  background-image: linear-gradient(160deg, rgb(var(--glow) / 0.12), rgb(var(--glow) / 0.02) 55%, transparent);
-  border-color: rgb(var(--glow) / 0.3);
+  background-image: linear-gradient(160deg, rgb(var(--glow) / 0.06), rgb(var(--glow) / 0.01) 55%, transparent);
+  border-color: rgb(var(--glow) / 0.2);
 }
 
 @utility glow {
-  box-shadow: 0 0 0 1px rgb(var(--glow) / 0.3), 0 0 22px -8px rgb(var(--glow) / 0.45);
+  box-shadow: 0 0 0 1px rgb(var(--glow) / 0.2), 0 0 18px -8px rgb(var(--glow) / 0.25);
 }
 
 /* Native <select> with its own chevron (works in every engine; the OS list itself stays native). */

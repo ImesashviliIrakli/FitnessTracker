@@ -7,12 +7,12 @@ export function AuthLayout({ title, children, footer }: { title: string; childre
       {/* Brand panel: the plate stripes are the one decorative move in the product. */}
       <div className="relative hidden overflow-hidden bg-[#161a26] p-12 text-[#e6e8f1] lg:flex lg:flex-col lg:justify-between">
         <span className="flex items-center gap-2 text-lg font-bold">
-          <LogoMark className="size-7 text-[#9aa2ff]" />
-          <span className="tracking-[0.18em] uppercase">Fittrack</span>
+          <LogoMark className="size-7 text-[#f59a5b]" />
+          <span className="font-display tracking-[0.18em] uppercase">Fittrack</span>
         </span>
         <div className="relative grid place-items-center py-8" aria-hidden="true">
-          <span className="absolute size-80 rounded-full bg-[#8b93ff]/10 blur-3xl" />
-          <LogoMark className="relative size-56 text-[#9aa2ff]" />
+          <span className="absolute size-80 rounded-full bg-[#ea7a2f]/15 blur-3xl" />
+          <LogoMark className="relative size-56 text-[#f59a5b]" />
         </div>
         <p className="max-w-sm text-xl leading-snug font-semibold">
           Log the work. Watch the trend. Hit the number.
