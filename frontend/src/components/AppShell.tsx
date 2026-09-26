@@ -1,5 +1,6 @@
 import { Suspense, useId, useState } from "react";
 import { Link, Outlet, useLocation } from "react-router";
+import { motion } from "motion/react";
 import {
   Calculator,
   ChevronDown,
@@ -150,6 +151,8 @@ function UserMenu() {
   );
 }
 
+const indicatorSpring = { type: "spring", stiffness: 500, damping: 38 } as const;
+
 function RailTip({ label }: { label: string }) {
   return (
     <span
@@ -193,12 +196,15 @@ export function AppShell() {
               aria-current={current === to ? "page" : undefined}
               className={cx(
                 "group relative grid size-12 place-items-center rounded-2xl transition-colors",
-                current === to
-                  ? "bg-surface-2 text-ink before:absolute before:-left-[1.125rem] before:h-5 before:w-1 before:rounded-full before:bg-accent"
-                  : "text-muted hover:bg-surface-2 hover:text-ink",
+                current === to ? "text-ink" : "text-muted hover:bg-surface-2 hover:text-ink",
               )}
             >
-              <Icon className="size-5" aria-hidden="true" />
+              {current === to && (
+                <motion.span layoutId="rail-active" aria-hidden="true" transition={indicatorSpring} className="absolute inset-0 grid items-center rounded-2xl bg-surface-2">
+                  <span className="absolute -left-[1.125rem] h-5 w-1 rounded-full bg-accent" />
+                </motion.span>
+              )}
+              <Icon className="relative size-5" aria-hidden="true" />
               <span className="sr-only">{label}</span>
               <RailTip label={label} />
             </Link>
@@ -266,7 +272,14 @@ export function AppShell() {
         <div className="mx-auto max-w-[90rem]">
           {onDashboard && <InstallBanner />}
           <Suspense fallback={<Loading />}>
-            <Outlet />
+            <motion.div
+              key={pathname}
+              initial={{ opacity: 0, y: 14, filter: "blur(4px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <Outlet />
+            </motion.div>
           </Suspense>
         </div>
       </main>
@@ -285,13 +298,16 @@ export function AppShell() {
             aria-current={currentMobile === to ? "page" : undefined}
             className={cx(
               "relative flex min-h-14 min-w-0 flex-col items-center justify-center gap-1.5 rounded-[1.25rem] px-0.5 text-[0.6875rem] leading-none whitespace-nowrap transition-colors min-[400px]:text-xs",
-              currentMobile === to
-                ? "bg-surface-2 font-medium text-ink before:absolute before:top-1 before:h-0.5 before:w-5 before:rounded-full before:bg-accent"
-                : "text-muted active:bg-surface-2",
+              currentMobile === to ? "font-medium text-ink" : "text-muted active:bg-surface-2",
             )}
           >
-            <Icon className="size-5" aria-hidden="true" />
-            <span aria-hidden={short ? true : undefined}>{short ?? label}</span>
+            {currentMobile === to && (
+              <motion.span layoutId="tab-active" aria-hidden="true" transition={indicatorSpring} className="absolute inset-0 flex justify-center rounded-[1.25rem] bg-surface-2">
+                <span className="mt-1 h-0.5 w-5 rounded-full bg-accent" />
+              </motion.span>
+            )}
+            <Icon className="relative size-5" aria-hidden="true" />
+            <span className="relative" aria-hidden={short ? true : undefined}>{short ?? label}</span>
             {short && <span className="sr-only">{label}</span>}
           </Link>
         ))}

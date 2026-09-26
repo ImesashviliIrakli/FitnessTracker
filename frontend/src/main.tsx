@@ -3,6 +3,7 @@ import { StrictMode, type CSSProperties } from "react";
 import { createRoot } from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RouterProvider } from "react-router";
+import { MotionConfig } from "motion/react";
 import { toast, Toaster } from "sonner";
 import { registerSW } from "virtual:pwa-register";
 import { ApiError } from "./lib/api";
@@ -74,9 +75,11 @@ const toastTheme = {
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-      <Toaster position="top-center" richColors closeButton style={toastTheme} />
-    </QueryClientProvider>
+    <MotionConfig reducedMotion="user">
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+        <Toaster position="top-center" richColors closeButton style={toastTheme} />
+      </QueryClientProvider>
+    </MotionConfig>
   </StrictMode>,
 );

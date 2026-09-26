@@ -13,6 +13,7 @@ import {
   type TextareaHTMLAttributes,
 } from "react";
 import { Link } from "react-router";
+import { motion, type HTMLMotionProps } from "motion/react";
 import { AlertTriangle, ArrowLeft, Compass, Loader2, Pencil, Trash2, X } from "lucide-react";
 
 export const cx = (...c: (string | false | null | undefined)[]) => c.filter(Boolean).join(" ");
@@ -47,21 +48,23 @@ export const Button = forwardRef<
   ButtonHTMLAttributes<HTMLButtonElement> & { variant?: Variant; size?: "sm" | "md"; loading?: boolean }
 >(function Button({ variant = "primary", size = "md", loading, className, children, disabled, type = "button", ...props }, ref) {
   return (
-    <button
+    <motion.button
       ref={ref}
       type={type}
       disabled={disabled || loading}
       aria-busy={loading || undefined}
+      whileTap={{ scale: 0.96 }}
+      transition={{ type: "spring", stiffness: 600, damping: 30 }}
       className={cx(
         buttonClass(variant, size),
         "disabled:opacity-55 disabled:pointer-events-none",
         className,
       )}
-      {...props}
+      {...(props as HTMLMotionProps<"button">)}
     >
       {loading && <Loader2 className="size-4 animate-spin" aria-hidden="true" />}
       {children}
-    </button>
+    </motion.button>
   );
 });
 
@@ -136,9 +139,16 @@ export function Field({
 
 export function Card({ className, children, ...props }: React.HTMLAttributes<HTMLElement>) {
   return (
-    <section className={cx("rounded-[1.25rem] border border-line bg-surface p-4 sm:p-6", className)} {...props}>
+    <motion.section
+      initial={{ opacity: 0, y: 18 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "0px 0px -40px 0px" }}
+      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+      className={cx("rounded-[1.25rem] border border-line bg-surface p-4 sm:p-6", className)}
+      {...(props as HTMLMotionProps<"section">)}
+    >
       {children}
-    </section>
+    </motion.section>
   );
 }
 
@@ -258,7 +268,12 @@ export function Dialog({
       )}
     >
       {open && (
-        <div className="p-5 pt-3 sm:p-6">
+        <motion.div
+          initial={{ opacity: 0, y: 28, scale: 0.97 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ type: "spring", stiffness: 420, damping: 32 }}
+          className="p-5 pt-3 sm:p-6"
+        >
           <div className="mx-auto mb-3 h-1 w-10 rounded-full bg-line sm:hidden" aria-hidden="true" />
           <div className="mb-4 flex items-start justify-between gap-4">
             <h2 id={titleId} className="min-w-0 text-base leading-snug font-semibold sm:text-lg">
@@ -269,7 +284,7 @@ export function Dialog({
             </button>
           </div>
           {children}
-        </div>
+        </motion.div>
       )}
     </dialog>
   );

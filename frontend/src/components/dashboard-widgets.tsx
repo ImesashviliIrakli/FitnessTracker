@@ -1,6 +1,7 @@
 import { useId, type ReactNode } from "react";
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { ChevronDown } from "lucide-react";
+import { motion } from "motion/react";
 import { cx } from "./ui";
 import { fmtNum, fmtShortDate } from "../lib/format";
 import { intTicks, TrendLegend } from "./charts";
@@ -77,17 +78,22 @@ export function CapsuleBars({
 }) {
   return (
     <div role="img" aria-label={summary} className="flex items-end justify-between gap-2 sm:gap-3">
-      {items.map((it) => {
+      {items.map((it, i) => {
         // 0–100% maps to 14–76% of the track so the caption always fits inside the capsule, above the fill.
         const fill = 14 + (Math.min(100, Math.max(0, it.pct)) / 100) * 62;
         return (
           <div key={it.key} className={cx("flex min-w-0 flex-1 flex-col items-center gap-2", it.hideOnPhone && "max-sm:hidden")}>
             <div className={cx("relative h-40 w-full max-w-14 rounded-full border bg-bg sm:h-44", it.current ? "border-accent/40" : "border-line")}>
-              <div
-                className={cx("absolute inset-x-1 bottom-1 rounded-full transition-[height] duration-500", it.current ? "glow bg-accent" : "bg-muted/20")}
-                style={{ height: `calc(${fill}% - 0.5rem)` }}
+              <motion.div
+                className={cx("absolute inset-x-1 bottom-1 rounded-full", it.current ? "glow bg-accent" : "bg-muted/20")}
+                initial={{ height: 0 }}
+                animate={{ height: `calc(${fill}% - 0.5rem)` }}
+                transition={{ type: "spring", stiffness: 140, damping: 18, delay: i * 0.06 }}
               />
-              <span
+              <motion.span
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.25 + i * 0.06 }}
                 className={cx(
                   "stat absolute inset-x-0 text-center text-[0.625rem] tracking-[-0.04em] whitespace-nowrap sm:text-[0.6875rem] xl:text-[0.625rem]",
                   it.current ? "text-accent-fg" : "text-muted",
@@ -95,7 +101,7 @@ export function CapsuleBars({
                 style={{ bottom: `calc(${fill}% + 0.25rem)` }}
               >
                 {it.caption}
-              </span>
+              </motion.span>
             </div>
             {/* Month over day ("Aug / 24"): one short word per line never collides with its neighbour. */}
             <span className={cx("flex flex-col items-center text-[0.625rem] leading-tight tracking-[-0.02em] whitespace-nowrap sm:text-[0.6875rem]", it.current ? "text-ink" : "text-muted")}>
@@ -128,7 +134,7 @@ export function Ring({ pct, children, size = 168 }: { pct: number; children: Rea
         </defs>
         <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="var(--surface-2)" strokeWidth={stroke} />
         <circle cx={size / 2} cy={size / 2} r={r - stroke / 2 - 6} fill="none" stroke="var(--line)" strokeWidth={1} strokeDasharray="2 5" />
-        <circle
+        <motion.circle
           cx={size / 2}
           cy={size / 2}
           r={r}
@@ -136,8 +142,9 @@ export function Ring({ pct, children, size = 168 }: { pct: number; children: Rea
           stroke={`url(#${gid})`}
           strokeWidth={stroke}
           strokeLinecap="round"
-          strokeDasharray={`${(clamped / 100) * c} ${c}`}
-          className="transition-[stroke-dasharray] duration-700"
+          initial={{ strokeDasharray: `0 ${c}` }}
+          animate={{ strokeDasharray: `${(clamped / 100) * c} ${c}` }}
+          transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
           style={{ filter: "drop-shadow(0 0 6px rgb(var(--glow) / 0.55))" }}
         />
       </svg>

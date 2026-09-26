@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { motion } from "motion/react";
 import { Logo, LogoMark } from "../components/AppShell";
 
 export function AuthLayout({ title, children, footer }: { title: string; children: ReactNode; footer: ReactNode }) {
@@ -11,8 +12,19 @@ export function AuthLayout({ title, children, footer }: { title: string; childre
           <span className="font-display tracking-[0.18em] uppercase">Fittrack</span>
         </span>
         <div className="relative grid place-items-center py-8" aria-hidden="true">
-          <span className="absolute size-80 rounded-full bg-[#ea7a2f]/15 blur-3xl" />
-          <LogoMark className="relative size-56 text-[#f59a5b]" />
+          <motion.span
+            className="absolute size-80 rounded-full bg-[#ea7a2f]/15 blur-3xl"
+            animate={{ scale: [1, 1.15, 1], opacity: [0.7, 1, 0.7] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="relative"
+            initial={{ opacity: 0, scale: 0.8, rotate: -40 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0, y: [0, -10, 0] }}
+            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], y: { duration: 5, repeat: Infinity, ease: "easeInOut" } }}
+          >
+            <LogoMark className="size-56 text-[#f59a5b]" />
+          </motion.div>
         </div>
         <p className="max-w-sm text-xl leading-snug font-semibold">
           Log the work. Watch the trend. Hit the number.
