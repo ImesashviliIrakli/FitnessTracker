@@ -75,7 +75,7 @@ const toastTheme = {
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <MotionConfig reducedMotion="user">
+    <MotionConfig reducedMotion="never">
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
         <Toaster position="top-center" richColors closeButton style={toastTheme} />
