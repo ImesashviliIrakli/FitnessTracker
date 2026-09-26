@@ -172,7 +172,7 @@ export function AppShell() {
   const firstName = me?.displayName?.split(" ")[0];
 
   return (
-    <div className="min-h-dvh bg-bg md:grid md:grid-cols-[5.5rem_1fr] md:grid-rows-[auto_1fr] md:bg-shell">
+    <div className="min-h-dvh bg-bg md:grid md:grid-cols-[5.5rem_1fr] md:grid-rows-[auto_1fr]">
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:rounded-xl focus:bg-accent focus:px-4 focus:py-2 focus:text-accent-ink"
@@ -181,8 +181,8 @@ export function AppShell() {
       </a>
 
       {/* Icon rail */}
-      <aside className="sticky top-0 hidden h-dvh flex-col items-center py-7 md:row-span-2 md:flex">
-        <Link to="/" aria-label="Fittrack home" className="text-ink/80 transition-colors hover:text-accent-fg">
+      <aside className="sticky top-0 hidden h-dvh flex-col items-center border-r border-line/70 py-7 md:row-span-2 md:flex">
+        <Link to="/" aria-label="Fittrack home" className="text-accent-fg transition-opacity hover:opacity-80">
           <LogoMark className="size-9" />
         </Link>
         <nav aria-label="Main" className="mt-12 flex flex-1 flex-col items-center gap-2.5">
@@ -216,7 +216,7 @@ export function AppShell() {
       </aside>
 
       {/* Top bar */}
-      <header className="sticky top-0 z-30 flex min-w-0 items-center justify-between gap-3 border-b border-line/70 bg-bg/80 px-4 pt-[max(0.75rem,env(safe-area-inset-top))] pb-3 backdrop-blur-xl md:static md:border-0 md:bg-transparent md:px-10 md:py-7 md:backdrop-blur-none">
+      <header className="sticky top-0 z-30 flex min-w-0 items-center justify-between gap-3 border-b border-line/70 bg-bg/80 px-4 pt-[max(0.75rem,env(safe-area-inset-top))] pb-3 backdrop-blur-xl md:px-10 md:py-7">
         <div className="flex min-w-0 items-center gap-3">
           <Link to="/" aria-label="Fittrack home" className="text-accent-fg md:hidden">
             <LogoMark className="size-7" />
@@ -261,7 +261,7 @@ export function AppShell() {
       <main
         id="main"
         tabIndex={-1}
-        className="aurora min-w-0 bg-bg px-4 pt-5 pb-[calc(6.5rem+env(safe-area-inset-bottom))] focus:outline-none sm:px-6 md:rounded-tl-[2rem] md:border-t md:border-l md:border-line md:px-10 md:pt-10 md:pb-16"
+        className="aurora min-w-0 bg-bg px-4 pt-5 pb-[calc(6.5rem+env(safe-area-inset-bottom))] focus:outline-none sm:px-6 md:px-10 md:pt-10 md:pb-16"
       >
         <div className="mx-auto max-w-[90rem]">
           {onDashboard && <InstallBanner />}
