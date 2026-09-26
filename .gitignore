@@ -22,3 +22,9 @@ test-results/
 .DS_Store
 
 coverage/
+
+# Stray temp build output
+$TEMP/
+
+# Stray temp build output
+$TEMP/
