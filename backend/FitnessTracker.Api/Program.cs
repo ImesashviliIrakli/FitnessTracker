@@ -63,7 +63,8 @@ builder.Services.ConfigureApplicationCookie(o =>
 {
     o.Cookie.Name = "ft_auth";
     o.Cookie.HttpOnly = true;
-    o.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    // ponytail: SameAsRequest so login works on the http-only lab domain; back to Always once HTTPS is set up.
+    o.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
     o.Cookie.SameSite = SameSiteMode.Lax;
     o.ExpireTimeSpan = TimeSpan.FromDays(14);
     o.SlidingExpiration = true;
